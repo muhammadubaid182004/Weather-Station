@@ -1,0 +1,169 @@
+/* Base styles */
+.stApp {
+    transition: all 0.3s ease-in-out;
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 100vh;
+}
+
+/* Theme toggle switch */
+.theme-toggle-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -38px;
+    margin-right: 1rem;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    pointer-events: all !important;
+}
+
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--toggle-bg, #4d7df8);
+    transition: .4s;
+    border-radius: 34px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* Move the slider for active state */
+.toggle-slider.active {
+    background-color: var(--toggle-bg, #4d2c72);
+}
+
+.toggle-slider.active:before {
+    transform: translateX(30px);
+}
+
+/* Make the entire toggle clickable */
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.sun-icon {
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    z-index: 1;
+    font-size: 14px;
+}
+
+.moon-icon {
+    position: absolute;
+    right: 9px;
+    top: 6px;
+    z-index: 1;
+    font-size: 14px;
+}
+
+/* Position the column correctly */
+[data-testid="column"]:nth-child(2) > div:first-child {
+    position: relative !important;
+}
+
+/* Location and datetime */
+.location {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #262730);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.datetime {
+    font-size: 1.2rem;
+    color: var(--text-color, #666);
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+}
+
+/* Weather cards */
+.weather-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: var(--text-color, #262730);
+    transition: all 0.3s ease;
+}
+
+.weather-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.prediction {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix metric styling */
+.stMetric {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: var(--text-color, #262730) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix spacing */
+[data-testid="stHorizontalBlock"] > div {
+    padding-top: 0 !important;
+}
+
+/* Hide iframe border */
+iframe {
+    border: none !important;
+    background: transparent !important;
+}
+
+[data-testid="stMetricLabel"] {
+    display: none !important;
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] {
+    --text-color: #f0f2f6;
+}
+
+/* Plotly chart text color adjustments */
+[data-testid="stMarkdownContainer"] {
+    color: var(--text-color, #262730);
+}

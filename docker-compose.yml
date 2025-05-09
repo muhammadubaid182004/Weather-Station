@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: weather_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mujt@b@231
+      MYSQL_DATABASE: weather_station
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.api
+    container_name: weather_api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/firmware:/app/firmware
+      - ./config.py:/app/config.py
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  weather_dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile.dashboard
+    container_name: weather_dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./config.py:/app/config.py
+    depends_on:
+      - api
+    restart: unless-stopped
+    command: streamlit run dashboard.py --server.address 0.0.0.0
+
+  firmware_dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile.dashboard
+    container_name: firmware_dashboard
+    ports:
+      - "8502:8501"
+    volumes:
+      - ./config.py:/app/config.py
+    depends_on:
+      - api
+    restart: unless-stopped
+    command: streamlit run firmware_manager.py --server.address 0.0.0.0
+
+volumes:
+  mysql_data:
