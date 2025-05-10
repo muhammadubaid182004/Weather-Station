@@ -16,20 +16,29 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
-# Helper functions
+with st.sidebar:
+    st.header("API Configuration")
+    new_api_url = st.text_input("API Base URL", API_BASE_URL)
+    if new_api_url != API_BASE_URL:
+        API_BASE_URL = new_api_url
+        st.success("API URL updated")
+        
 def fetch_data(endpoint: str, params: dict = None):
     """Fetch data from API endpoint"""
     try:
-        response = requests.get(f"{API_BASE_URL}{endpoint}", params=params, timeout=5)
+        url = f"{API_BASE_URL}{endpoint}"
+        st.sidebar.write(f"Trying: {url}")  # Debug info
+        response = requests.get(url, params=params, timeout=15)
         
         if response.status_code == 200:
             return response.json()
         else:
             st.error(f"Error fetching data: {response.status_code}")
+            st.error(f"URL: {url}")  # Show the URL that failed
             return None
     except Exception as e:
         st.error(f"Connection error: {str(e)}")
+        st.error(f"Endpoint: {endpoint}")  # Show which endpoint failed
         return None
 
 def upload_firmware(file, version, description, is_stable):
