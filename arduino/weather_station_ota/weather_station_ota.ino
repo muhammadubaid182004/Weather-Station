@@ -17,7 +17,7 @@
 #define SENSOR_READ_INTERVAL 30000  // 30 seconds
 #define SERVER_TIMEOUT 10000
 #define EEPROM_SIZE 512
-#define FIRMWARE_VERSION "1.0.0"
+#define FIRMWARE_VERSION "1.0.2"
 
 // WiFi credentials
 const char* ssid = "Infinix HOT 40 Pro";
@@ -141,6 +141,16 @@ void loop() {
   }
   
   delay(10);
+}
+
+void onOTAStart() {
+    String type;
+    if (Update.isRunning()) {
+        type = "Sketch";
+    } else {
+        type = "SPIFFS";
+    }
+    Serial.println("Start updating " + type);
 }
 
 void setupWebServer() {

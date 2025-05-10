@@ -9,7 +9,7 @@ class Config:
     }
     
     # API settings
-    API_BASE_URL = 'http://localhost:5000/api/v1'
+    API_BASE_URL = 'http://192.168.170.145:5000/api/v1'
     API_HOST = '0.0.0.0'
     API_PORT = 5000
     

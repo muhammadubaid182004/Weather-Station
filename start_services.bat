@@ -8,10 +8,10 @@ start "API Server" cmd /k "cd /d %~dp0server && python weather_api_ota.py"
 timeout /t 5
 
 :: Start Weather Dashboard
-start "Weather Dashboard" cmd /k "cd /d %~dp0dashboard && streamlit run dashboard.py --server.port=8501 --logger.level=debug"
+start "Weather Dashboard" cmd /k "cd /d %~dp0dashboard && streamlit run dashboard.py --server.address=0.0.0.0 --server.port=8501 --logger.level=debug"
 
 :: Start Firmware Manager
-start "Firmware Manager" cmd /k "cd /d %~dp0dashboard && streamlit run firmware_manager.py --server.port=8502 --logger.level=debug"
+start "Firmware Manager" cmd /k "cd /d %~dp0dashboard && streamlit run firmware_manager.py --server.address=0.0.0.0 --server.port=8502 --logger.level=debug"
 
 
 echo All services started!
